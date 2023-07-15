@@ -12,7 +12,8 @@ class CoursesController < ApplicationController
   end
 
   def new
-    @course = Course.new(course_params)
+    @course = Course.new
+    authorize @course
   end
 
   def create
@@ -24,6 +25,7 @@ class CoursesController < ApplicationController
     else
       render :new, status: :unprocessable_entity
     end
+    authorize @course
   end
 
   def edit
