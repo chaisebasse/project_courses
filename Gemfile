@@ -48,10 +48,11 @@ gem "sassc-rails"
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
 
-gem "bootstrap", "~> 5.2"
+gem "bootstrap", "~> 5.2.3"
 gem "devise"
+gem "pundit"
 gem "autoprefixer-rails"
-gem "font-awesome-sass", "~> 6.1"
+gem "font-awesome-sass", "~> 6.4.0"
 gem "simple_form", github: "heartcombo/simple_form"
 
 group :development, :test do
