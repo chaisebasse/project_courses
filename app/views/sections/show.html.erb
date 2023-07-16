@@ -1,2 +1,5 @@
 <h1>Sections#show</h1>
 <p>Find me in app/views/sections/show.html.erb</p>
+<% @section.videos.each do |video| %>
+  <%= link_to video.name, video_path(video) %>
+<% end %>

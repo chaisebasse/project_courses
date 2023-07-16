@@ -30,18 +30,21 @@ class CoursesController < ApplicationController
 
   def edit
     @course = Course.find(params[:id])
+    authorize @course
   end
 
   def update
     @course = Course.find(params[:id])
     @course.update(course_params)
     redirect_to course_path(@course)
+    authorize @course
   end
 
   def destroy
     @course = Course.find(params[:id])
     @course.destroy
     redirect_to courses_path
+    authorize @course
   end
 
   private
