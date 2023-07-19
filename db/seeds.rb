@@ -12,3 +12,4 @@ Section.create!(title: 'Section 2', course: course1)
 Video.create!(name: "Video 1", section: section1)
 Video.create!(name: "Video 2", section: section1)
 puts "done"
+ 
