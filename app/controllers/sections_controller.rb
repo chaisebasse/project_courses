@@ -15,6 +15,11 @@ class SectionsController < ApplicationController
     @course = @section.course
     @course.save
     @section.save
+    if @section.save
+      redirect_to section_path(@section)
+    else
+      render :new, status: :unprocessable_entity
+    end
     authorize @section
   end
 

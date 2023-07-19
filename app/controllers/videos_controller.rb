@@ -14,6 +14,11 @@ class VideosController < ApplicationController
     @section = @video.section
     @section.save
     @video.save
+    if @video.save
+      redirect_to video_path(@video)
+    else
+      render :new, status: :unprocessable_entity
+    end
     authorize @video
   end
 
@@ -39,6 +44,6 @@ class VideosController < ApplicationController
   private
 
   def video_params
-    params.require(:video).permit(:name, :section_id)
+    params.require(:video).permit(:name, :section_id, :video)
   end
 end
