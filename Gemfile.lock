@@ -155,6 +155,15 @@ GEM
     mime-types-data (3.2023.0218.1)
     mini_mime (1.1.2)
     minitest (5.18.1)
+    monetize (1.12.0)
+      money (~> 6.12)
+    money (6.16.0)
+      i18n (>= 0.6.4, <= 2)
+    money-rails (1.15.0)
+      activesupport (>= 3.0)
+      monetize (~> 1.9)
+      money (~> 6.13)
+      railties (>= 3.0)
     msgpack (1.7.1)
     net-imap (0.3.6)
       date
@@ -244,6 +253,7 @@ GEM
       sprockets (>= 3.0.0)
     stimulus-rails (1.2.1)
       railties (>= 6.0.0)
+    stripe (8.6.0)
     thor (1.2.2)
     tilt (2.2.0)
     timeout (0.4.0)
@@ -273,7 +283,7 @@ GEM
     websocket-extensions (0.1.5)
     xpath (3.2.0)
       nokogiri (~> 1.8)
-    zeitwerk (2.6.8)
+    zeitwerk (2.6.9)
 
 PLATFORMS
   x86_64-linux
@@ -290,6 +300,7 @@ DEPENDENCIES
   font-awesome-sass (~> 6.4.0)
   importmap-rails
   jbuilder
+  money-rails (~> 1.12)
   pg (~> 1.1)
   puma (~> 5.0)
   pundit
@@ -299,6 +310,7 @@ DEPENDENCIES
   simple_form!
   sprockets-rails
   stimulus-rails
+  stripe
   turbo-rails
   tzinfo-data
   web-console

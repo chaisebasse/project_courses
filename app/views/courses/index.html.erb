@@ -1,8 +1,12 @@
 <h1>Courses#index</h1>
 <% @courses.each do |course| %>
-  <%= link_to course.title, course_path(course) %> <br>
+  <%= link_to course.title, course_path(course) %> <%= humanized_money_with_symbol(course.price) %> <br>
 <% end %>
 
-<%= link_to "create a course", new_course_path %>
-<%= link_to "create a section", new_section_path %>
-<%= link_to "create a video", new_video_path %>
+<% if current_user != nil %>
+  <% if current_user.admin %>
+    <%= link_to "create a course", new_course_path %>
+    <%= link_to "create a section", new_section_path %>
+    <%= link_to "create a video", new_video_path %>
+  <% end %>
+<% end %>

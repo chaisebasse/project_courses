@@ -9,4 +9,5 @@ Rails.application.routes.draw do
   resources :courses
   resources :sections, except: :index
   resources :videos, except: :index
+  resources :orders, only: %i[show create]
 end

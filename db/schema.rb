@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_19_172209) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_26_140351) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -47,6 +47,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_19_172209) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "description"
+    t.integer "price_cents", default: 0, null: false
+    t.string "price_currency", default: "EUR", null: false
   end
 
   create_table "courses_users", id: false, force: :cascade do |t|
@@ -54,6 +56,20 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_19_172209) do
     t.bigint "course_id", null: false
     t.index ["course_id", "user_id"], name: "index_courses_users_on_course_id_and_user_id"
     t.index ["user_id", "course_id"], name: "index_courses_users_on_user_id_and_course_id"
+  end
+
+  create_table "orders", force: :cascade do |t|
+    t.string "state"
+    t.string "course_sku"
+    t.integer "amount_cents", default: 0, null: false
+    t.string "amount_currency", default: "EUR", null: false
+    t.string "checkout_session_id"
+    t.bigint "user_id", null: false
+    t.bigint "course_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["course_id"], name: "index_orders_on_course_id"
+    t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
   create_table "purchases", force: :cascade do |t|
@@ -100,6 +116,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_19_172209) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "orders", "courses"
+  add_foreign_key "orders", "users"
   add_foreign_key "purchases", "sections"
   add_foreign_key "purchases", "users"
   add_foreign_key "sections", "courses"

@@ -1,4 +1,7 @@
 class SectionsController < ApplicationController
+  before_action :authenticate_user!, except: %i[index show]
+  before_action :authorize_user!, except: %i[index show]
+
   def show
     @section = Section.find(params[:id])
     @course = @section.course
@@ -7,7 +10,6 @@ class SectionsController < ApplicationController
 
   def new
     @section = Section.new
-    authorize @section
   end
 
   def create
@@ -20,31 +22,31 @@ class SectionsController < ApplicationController
     else
       render :new, status: :unprocessable_entity
     end
-    authorize @section
   end
 
   def edit
     @section = Section.find(params[:id])
-    authorize @section
   end
 
   def update
     @section = Section.find(params[:id])
     @section.update(section_params)
     redirect_to section_path(@section)
-    authorize @section
   end
 
   def destroy
     @section = Section.find(params[:id])
     @section.destroy
     redirect_to sections_path
-    authorize @section
   end
 
   private
 
   def section_params
     params.require(:section).permit(:title, :course_id)
+  end
+
+  def authorize_user!
+    authorize Section, :admin?
   end
 end

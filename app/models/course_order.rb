@@ -1,0 +1,2 @@
+class CourseOrder < ApplicationRecord
+end

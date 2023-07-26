@@ -7,8 +7,12 @@ class CoursePolicy < ApplicationPolicy
     true
   end
 
+  def admin?
+    user.present? && user.admin?
+  end
+
   def create?
-    user.admin?
+    admin?
   end
 
   def new?
@@ -16,7 +20,7 @@ class CoursePolicy < ApplicationPolicy
   end
 
   def update?
-    user.admin?
+    admin?
   end
 
   def edit?
@@ -24,16 +28,12 @@ class CoursePolicy < ApplicationPolicy
   end
 
   def destroy?
-    user.admin?
+    admin?
   end
 
   class Scope < Scope
     def resolve
-      if user.admin?
-        scope.all
-      else
-        scope.where(user: user)
-      end
+      scope.all
     end
   end
 end
