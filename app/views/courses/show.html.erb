@@ -1,5 +1,10 @@
 <h1>Courses#show</h1>
 <h2><%= @course.title %> <%= humanized_money_with_symbol(@course.price) %></h2>
 <% @course.sections.each do |section| %>
-  <%= link_to section.title, section_path(section) %>
+  <%= link_to section.title, section_path(section) %> <%= humanized_money_with_symbol(section.price) %>
+<% end %>
+
+<%= form_with url: orders_path do %>
+  <%= hidden_field_tag 'course_id', @course.id %>
+  <%= submit_tag 'Purchase', class: 'btn btn-primary' %>
 <% end %>

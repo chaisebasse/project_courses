@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_26_140351) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_27_193054) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -49,6 +49,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_26_140351) do
     t.text "description"
     t.integer "price_cents", default: 0, null: false
     t.string "price_currency", default: "EUR", null: false
+    t.string "sku"
   end
 
   create_table "courses_users", id: false, force: :cascade do |t|
@@ -87,6 +88,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_26_140351) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "description"
+    t.string "sku"
+    t.integer "price_cents", default: 0, null: false
+    t.string "price_currency", default: "EUR", null: false
     t.index ["course_id"], name: "index_sections_on_course_id"
   end
 

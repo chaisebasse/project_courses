@@ -3,7 +3,7 @@ class Course < ApplicationRecord
   has_many :sections, dependent: :destroy
 
   validates :title, presence: true, uniqueness: true
-  has_one_attached :video
+  has_one_attached :photo
 
   monetize :price_cents
 end

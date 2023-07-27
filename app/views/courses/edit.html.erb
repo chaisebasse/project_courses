@@ -1,1 +1,9 @@
 <h1>Courses#edit</h1>
+      <%= simple_form_for(@course) do |f| %>
+        <%= f.input :title,
+                    label: "course name :",
+        <%= f.input :grape_variety,
+                    label: "Cépage de la vigne :",
+
+        <%= f.button :submit, "Modify my course :" %>
+      <% end %>

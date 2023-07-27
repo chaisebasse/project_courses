@@ -14,7 +14,7 @@ class CoursesController < ApplicationController
   end
 
   def new
-    @course = Course.ne
+    @course = Course.new
     authorize @course
   end
 
