@@ -1,6 +1,11 @@
 class OrdersController < ApplicationController
   before_action :authenticate_user!
   before_action :authorize_user!
+
+  def show
+    @order = current_user.orders.find(params[:id])
+  end
+  
   def create
     course = Course.find(params[:course_id])
     order  = Order.create!(
