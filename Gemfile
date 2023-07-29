@@ -57,6 +57,7 @@ gem "simple_form", github: "heartcombo/simple_form"
 gem "cloudinary"
 gem 'money-rails', '~> 1.12'
 gem 'stripe'
+gem 'stripe_event'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem

@@ -3,3 +3,8 @@
 <% @section.videos.each do |video| %>
   <%= link_to video.name, video_path(video) %>
 <% end %>
+
+<%= form_with url: order_payments_path(@order) do %>
+  <%= hidden_field_tag 'order_id', @order.id %>
+  <%= submit_tag 'Purchase', class: 'btn btn-primary' %>
+<% end %>

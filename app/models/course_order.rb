@@ -1,2 +1,0 @@
-class CourseOrder < ApplicationRecord
-end

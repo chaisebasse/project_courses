@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_27_193054) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_28_095958) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -82,6 +82,20 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_27_193054) do
     t.index ["user_id"], name: "index_purchases_on_user_id"
   end
 
+  create_table "section_orders", force: :cascade do |t|
+    t.string "state"
+    t.string "section_sku"
+    t.integer "amount_cents", default: 0, null: false
+    t.string "amount_currency", default: "EUR", null: false
+    t.string "checkout_session_id"
+    t.bigint "user_id", null: false
+    t.bigint "section_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["section_id"], name: "index_section_orders_on_section_id"
+    t.index ["user_id"], name: "index_section_orders_on_user_id"
+  end
+
   create_table "sections", force: :cascade do |t|
     t.string "title"
     t.bigint "course_id", null: false
@@ -124,6 +138,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_27_193054) do
   add_foreign_key "orders", "users"
   add_foreign_key "purchases", "sections"
   add_foreign_key "purchases", "users"
+  add_foreign_key "section_orders", "sections"
+  add_foreign_key "section_orders", "users"
   add_foreign_key "sections", "courses"
   add_foreign_key "videos", "sections"
 end

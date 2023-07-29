@@ -8,6 +8,7 @@ class User < ApplicationRecord
   has_many :purchases
   has_many :sections, through: :purchases
   has_many :orders
+  has_many :section_orders
 
   validates :first_name, :last_name, :email, presence: true
   validates :email, uniqueness: true
