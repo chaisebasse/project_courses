@@ -10,6 +10,14 @@ class CoursesController < ApplicationController
   def show
     @course = policy_scope(Course)
     @course = Course.find(params[:id])
+    @section = Section.find(params[:section_id]) if params[:section_id].present?
+
+    # Check if a section is selected, and create or find an order for the selected section
+    @order = if @section
+               current_user.orders.find_or_create_by(purchasable: @section, state: 'pending')
+             else
+               current_user.orders.find_or_create_by(purchasable: @course, state: 'pending')
+             end
     authorize @course
   end
 

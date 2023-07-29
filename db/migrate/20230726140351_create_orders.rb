@@ -6,7 +6,7 @@ class CreateOrders < ActiveRecord::Migration[7.0]
       t.monetize :amount
       t.string :checkout_session_id
       t.references :user, null: false, foreign_key: true
-      t.references :course, null: false, foreign_key: true
+      t.references :purchasable, polymorphic: true, index: true
 
       t.timestamps
     end

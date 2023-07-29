@@ -9,24 +9,15 @@ class PaymentsController < ApplicationController
   end
 
   def create
-    if params[:course_id].present? # Course order
-      course = Course.find(params[:course_id])
-      order = Order.create!(
-        course:,
-        course_sku: course.sku,
-        amount: course.price,
-        state: 'pending',
-        user: current_user
-      )
-    elsif params[:section_id].present? # Section order
-      section = Section.find(params[:section_id])
-      order = Order.create!(
-        section:,
-        section_sku: section.sku,
-        amount: section.price,
-        state: 'pending',
-        user: current_user
-      )
+    @order = Order.find(params[:order_id])
+
+    if @order.course.present?
+      product_name = @order.course.title
+    elsif @order.section.present?
+      product_name = @order.section.title
+    else
+      # Handle the case where neither course nor section is present
+      # You can raise an error, redirect, or handle it as appropriate for your application.
     end
 
     session = Stripe::Checkout::Session.create(
@@ -35,19 +26,19 @@ class PaymentsController < ApplicationController
         price_data: {
           currency: 'eur',
           product_data: {
-            name: order.course.title || order.section.title
+            name: product_name
           },
-          unit_amount: order.amount_cents
+          unit_amount: @order.amount_cents
         },
         quantity: 1
       }],
-      mode: 'payment', # You can use 'payment' or 'subscription' depending on your use case
-      success_url: order_url(order),
-      cancel_url: order_url(order)
+      mode: 'payment',
+      success_url: order_url(@order),
+      cancel_url: order_url(@order)
     )
 
-    order.update(checkout_session_id: session.id)
-    redirect_to new_order_payment_path(order)
+    @order.update(checkout_session_id: session.id)
+    redirect_to new_order_payment_path(@order)
   end
 
   private

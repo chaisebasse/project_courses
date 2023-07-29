@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_28_095958) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_27_193054) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -44,12 +44,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_28_095958) do
 
   create_table "courses", force: :cascade do |t|
     t.string "title"
+    t.text "description"
+    t.string "sku"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.text "description"
     t.integer "price_cents", default: 0, null: false
     t.string "price_currency", default: "EUR", null: false
-    t.string "sku"
   end
 
   create_table "courses_users", id: false, force: :cascade do |t|
@@ -66,10 +66,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_28_095958) do
     t.string "amount_currency", default: "EUR", null: false
     t.string "checkout_session_id"
     t.bigint "user_id", null: false
-    t.bigint "course_id", null: false
+    t.string "purchasable_type"
+    t.bigint "purchasable_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["course_id"], name: "index_orders_on_course_id"
+    t.index ["purchasable_type", "purchasable_id"], name: "index_orders_on_purchasable"
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
@@ -82,27 +83,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_28_095958) do
     t.index ["user_id"], name: "index_purchases_on_user_id"
   end
 
-  create_table "section_orders", force: :cascade do |t|
-    t.string "state"
-    t.string "section_sku"
-    t.integer "amount_cents", default: 0, null: false
-    t.string "amount_currency", default: "EUR", null: false
-    t.string "checkout_session_id"
-    t.bigint "user_id", null: false
-    t.bigint "section_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["section_id"], name: "index_section_orders_on_section_id"
-    t.index ["user_id"], name: "index_section_orders_on_user_id"
-  end
-
   create_table "sections", force: :cascade do |t|
     t.string "title"
+    t.text "description"
+    t.string "sku"
     t.bigint "course_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.text "description"
-    t.string "sku"
     t.integer "price_cents", default: 0, null: false
     t.string "price_currency", default: "EUR", null: false
     t.index ["course_id"], name: "index_sections_on_course_id"
@@ -118,28 +105,25 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_28_095958) do
     t.datetime "updated_at", null: false
     t.string "first_name"
     t.string "last_name"
-    t.boolean "admin"
+    t.boolean "admin", default: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
   create_table "videos", force: :cascade do |t|
     t.string "name"
+    t.text "description"
     t.bigint "section_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.text "description"
     t.index ["section_id"], name: "index_videos_on_section_id"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "orders", "courses"
   add_foreign_key "orders", "users"
   add_foreign_key "purchases", "sections"
   add_foreign_key "purchases", "users"
-  add_foreign_key "section_orders", "sections"
-  add_foreign_key "section_orders", "users"
   add_foreign_key "sections", "courses"
   add_foreign_key "videos", "sections"
 end
