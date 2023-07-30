@@ -28,9 +28,11 @@ class CoursesController < ApplicationController
 
   def create
     @course = Course.new(course_params)
+    @course.price_cents = params[:course][:price_cents] 
     @course.save
     if @course.save
       redirect_to course_path(@course)
+      puts "PRICE PRICE#{@course.price_cents}"
     else
       render :new, status: :unprocessable_entity
     end

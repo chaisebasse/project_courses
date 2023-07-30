@@ -2,6 +2,7 @@
 <%= simple_form_for @course do |f| %>
   <%= f.input :title,
         label: "course title :" %>
+  <%= f.input :price_cents %>
 
   <%= f.button :submit, "Create Course" %>
 <% end %>

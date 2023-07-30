@@ -7,24 +7,28 @@ class OrdersController < ApplicationController
   end
 
   def create
-    course = Course.find(params[:course_id])
-    order  = Order.create!(
-      course:,
-      course_sku: course.sku,
-      amount: course.price,
-      state: 'pending',
-      user: current_user
-    )
-
-    # course.sections.each do |section|
-    #   Order.create!(
-    #     course:,
-    #     course_sku: section.sku,
-    #     amount: section.price,
-    #     state: 'pending',
-    #     user:
-    #   )
-    # end
+    if params[:course_id].present?
+      course = Course.find(params[:course_id])
+      @order = Order.create!(
+        purchasable: course,
+        course_sku: course.sku,
+        amount: course.price,
+        state: 'pending',
+        user: current_user
+      )
+      @order.amount = params[:order][:amount]
+    elsif params[:section_id].present?
+      section = Section.find(params[:section_id])
+      @order = Order.create!(
+        purchasable: section,
+        section_sku: section.sku,
+        amount: section.price,
+        state: 'pending',
+        user: current_user
+      )
+      @order.amount = params[:order][:amount]
+    end
+    @order.save
 
     session = Stripe::Checkout::Session.create(
       payment_method_types: ['card'],
@@ -32,19 +36,19 @@ class OrdersController < ApplicationController
         price_data: {
           currency: 'eur',
           product_data: {
-            name: course.title,
+            name: @order.purchasable.title
           },
-          unit_amount: course.price_cents
+          unit_amount: @order.purchasable.price_cents
         },
         quantity: 1
       }],
-      mode: 'payment', # You can use 'payment' or 'subscription' depending on your use case
-      success_url: order_url(order),
-      cancel_url: order_url(order)
+      mode: 'payment',
+      success_url: order_url(@order),
+      cancel_url: order_url(@order)
     )
 
-    order.update(checkout_session_id: session.id)
-    redirect_to new_order_payment_path(order)
+    @order.update(checkout_session_id: session.id)
+    redirect_to new_order_payment_path(@order)
   end
 
   private
