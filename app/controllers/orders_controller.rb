@@ -26,29 +26,7 @@ class OrdersController < ApplicationController
         state: 'pending',
         user: current_user
       )
-      @order.amount = params[:order][:amount]
     end
-    @order.save
-
-    session = Stripe::Checkout::Session.create(
-      payment_method_types: ['card'],
-      line_items: [{
-        price_data: {
-          currency: 'eur',
-          product_data: {
-            name: @order.purchasable.title
-          },
-          unit_amount: @order.purchasable.price_cents
-        },
-        quantity: 1
-      }],
-      mode: 'payment',
-      success_url: order_url(@order),
-      cancel_url: order_url(@order)
-    )
-
-    @order.update(checkout_session_id: session.id)
-    redirect_to new_order_payment_path(@order)
   end
 
   private

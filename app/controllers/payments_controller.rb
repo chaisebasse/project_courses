@@ -4,25 +4,24 @@ class PaymentsController < ApplicationController
 
   def new
     @order = Order.find(params[:order_id])
+    # Load the associated course or section based on the order type
+    @item = @order.purchasable
   end
 
   def create
     @order = Order.find(params[:order_id])
+    @order.amount_cents = @order.purchasable.price_cents
 
     if @order.purchasable_type == 'Course'
       product_name = @order.purchasable.title
-      unit_amount = @order.amount_cents
-      puts "Course: unit_amount = #{unit_amount}"
+      @order.course_sku = @order.purchasable.sku
+      puts "Course: unit_amount = #{@order.amount_cents}"
     elsif @order.purchasable_type == 'Section'
       product_name = @order.purchasable.title
-      unit_amount = @order.purchasable.price_cents
-      puts "Section: unit_amount = #{unit_amount}"
+      @order.section_sku = @order.purchasable.sku
+      puts "Section: unit_amount = #{@order.amount_cents}"
     else
       raise "Unknown purchasable type: #{@order.purchasable_type}"
-    end
-
-    if unit_amount.zero?
-      raise "Unit amount cannot be zero for payment"
     end
 
     # The rest of the code remains the same
@@ -34,7 +33,7 @@ class PaymentsController < ApplicationController
           product_data: {
             name: product_name
           },
-          unit_amount:
+          unit_amount: @order.amount_cents
         },
         quantity: 1
       }],

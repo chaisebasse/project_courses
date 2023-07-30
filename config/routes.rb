@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   resources :sections, except: :index
   resources :videos, except: :index
   resources :orders do
-    resources :payments, only: %i[new create]
+    resources :payments
   end
 
   mount StripeEvent::Engine, at: '/stripe-webhooks'
