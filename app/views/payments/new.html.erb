@@ -1,8 +1,8 @@
 <div class="container">
   <div class="row py-4">
-    <div class="col-md-3">
-      <%= image_tag @item.photo, width: '100%' if @item.photo.present? %>
-    </div>
+    <%# <div class="col-md-3">
+      <%= image_tag @item.photo, width: '100%' if @item.photo.exist? %>
+    <%# </div> %>
     <div class="col">
       <h1>Checkout summary</h1>
       <p>Purchase of <strong><%= @item.title %></strong> for <strong><%= humanized_money_with_symbol @order.amount %></strong></p>

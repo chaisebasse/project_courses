@@ -14,11 +14,11 @@ class PaymentsController < ApplicationController
 
     if @order.purchasable_type == 'Course'
       product_name = @order.purchasable.title
-      @order.course_sku = @order.purchasable.sku
+      @order.order_sku = @order.purchasable.sku
       puts "Course: unit_amount = #{@order.amount_cents}"
     elsif @order.purchasable_type == 'Section'
       product_name = @order.purchasable.title
-      @order.section_sku = @order.purchasable.sku
+      @order.order_sku = @order.purchasable.sku
       puts "Section: unit_amount = #{@order.amount_cents}"
     else
       raise "Unknown purchasable type: #{@order.purchasable_type}"

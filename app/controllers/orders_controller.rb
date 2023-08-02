@@ -11,22 +11,22 @@ class OrdersController < ApplicationController
       course = Course.find(params[:course_id])
       @order = Order.create!(
         purchasable: course,
-        course_sku: course.sku,
+        order_sku: course.sku,
         amount: course.price,
         state: 'pending',
         user: current_user
       )
-      @order.amount = params[:order][:amount]
     elsif params[:section_id].present?
       section = Section.find(params[:section_id])
       @order = Order.create!(
         purchasable: section,
-        section_sku: section.sku,
+        order_sku: section.sku,
         amount: section.price,
         state: 'pending',
         user: current_user
       )
     end
+    @order.amount = params[:order][:amount]
   end
 
   private
