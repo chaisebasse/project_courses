@@ -7,6 +7,7 @@ class Section < ApplicationRecord
 
   validates :title, presence: true
   has_one_attached :video
+  has_one_attached :photo
 
   monetize :price_cents
 end

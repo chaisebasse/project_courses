@@ -7,5 +7,5 @@ class Course < ApplicationRecord
   validates :price_cents, presence: true
   validates :title, presence: true, uniqueness: true
   has_one_attached :photo
-
+  has_one_attached :video
 end
