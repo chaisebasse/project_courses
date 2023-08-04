@@ -1,8 +1,30 @@
 <h1>Courses#new</h1>
-<%= simple_form_for @course do |f| %>
-  <%= f.input :title,
-        label: "course title :" %>
-  <%= f.input :price_cents %>
 
-  <%= f.button :submit, "Create Course" %>
+<%= simple_form_for @course do |c| %>
+  <div>
+    <h4>Enter Course Title</h4>
+    <%= c.input :title %>
+  </div>
+  <%= c.input :price_cents %>
+
+  <%= c.simple_fields_for :sections do |s| %>
+    <div>
+      <h4>Enter Section Title</h4>
+      <%= s.input :title %>
+    </div>
+
+    <%= s.simple_fields_for :videos do |v| %>
+      <div>
+        <h4>Enter Video name</h4>
+        <%= v.input :name %>
+      </div>
+
+      <%= v.input :video,
+              required: false,
+              as: :file %>
+    <% end %>
+
+  <% end %>
+
+  <%= c.button :submit %>
 <% end %>

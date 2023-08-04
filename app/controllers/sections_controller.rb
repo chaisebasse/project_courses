@@ -4,6 +4,7 @@ class SectionsController < ApplicationController
 
   def show
     @section = Section.find(params[:id])
+
     @course = @section.course
     @order = @section.orders.find_or_initialize_by(user: current_user, state: 'pending')
 
