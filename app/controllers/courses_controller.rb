@@ -33,7 +33,7 @@ class CoursesController < ApplicationController
     @course.price_cents = params[:course][:price_cents]
     @course.save
     if @course.save
-      redirect_to course_path(@course), notice: 'Course was successfully created.'
+      flash.alert = 'Course was successfully created.'
       puts "PRICE PRICE#{@course.price_cents}"
     else
       puts @course.errors.full_messages
@@ -60,7 +60,7 @@ class CoursesController < ApplicationController
   private
 
   def course_params
-    params.require(:course).permit(:title, sections_attributes: [:id, :title, { videos_attributes: %i[id name video] }])
+    params.require(:course).permit(:title, :price_cents, sections_attributes: [:id, :title, :price_cents, :description, { videos_attributes: %i[id name video] }])
   end
 
   def authorize_user!
