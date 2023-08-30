@@ -4,19 +4,10 @@
   <%= simple_form_for @course do |c| %>
     <div style="margin-bottom: 40px">
       <h4>Enter Course Title</h4>
-      <%= c.input :title %>
-      <%= c.input :price_cents %>
+      <%= c.input :title, class: "form" %>
+      <%= c.input :price_cents, class: "form" %>
     </div>
 
-    <div class="sections" data-controller="add">
-      <button data-action="click->add#addSection" class="btn btn-primary btn-new-element">Add Section</button>
-      <div data-add-target="sectionTemplate">
-        <%= c.simple_fields_for :sections do |s| %>
-          <%= render 'section_fields', f: s, section: @section %>
-        <% end %>
-      </div>
-    </div>
-
-    <div class="mt-3"><%= c.button :submit %></div>
+    <div class="mt-3"><%= c.button :submit, class: "form" %></div>
   <% end %>
 </div>

@@ -14,6 +14,9 @@ class SectionsController < ApplicationController
   end
 
   def new
+    @course_title = params[:course_title]
+    @course = Course.find_by(title: @course_title)
+
     @section = Section.new
   end
 
@@ -23,7 +26,8 @@ class SectionsController < ApplicationController
     @course.save
     @section.save
     if @section.save
-      redirect_to section_path(@section)
+      redirect_to new_section_path
+      flash.alert = 'Bon appétit'
     else
       render :new, status: :unprocessable_entity
     end
@@ -48,7 +52,7 @@ class SectionsController < ApplicationController
   private
 
   def section_params
-    params.require(:section).permit(:title, :course_id)
+    params.require(:section).permit(:title, :price_cents, :course_id)
   end
 
   def authorize_user!

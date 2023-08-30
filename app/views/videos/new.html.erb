@@ -1,11 +1,13 @@
 <h1>Videos#new</h1>
 <%= simple_form_for @video do |f| %>
   <%= f.input :name,
-        label: "video name :" %>
-  <%= f.input :section_id, collection: Section.all, label: "Section", label_method: :title %>
+        label: "video name :",
+        class: "form" %>
+  <%= f.grouped_collection_select :section_id, Course.all, :sections, :title, :id, :title, prompt: "Select a Section", class: "form" %>
   <%= f.input :video,
               required: false,
-              as: :file %>
+              as: :file,
+              class: "form" %>
 
-  <%= f.button :submit, "Create Video" %>
+  <%= f.button :submit, "Create Video", class: "form" %>
 <% end %>

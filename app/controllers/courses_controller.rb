@@ -23,8 +23,6 @@ class CoursesController < ApplicationController
 
   def new
     @course = Course.new
-    @section = @course.sections.build
-    @section.videos.build
     authorize @course
   end
 
@@ -33,7 +31,8 @@ class CoursesController < ApplicationController
     @course.price_cents = params[:course][:price_cents]
     @course.save
     if @course.save
-      flash.alert = 'Course was successfully created.'
+      redirect_to new_section_path(course_title: @course.title),
+                  notice: 'Bonjour'
       puts "PRICE PRICE#{@course.price_cents}"
     else
       puts @course.errors.full_messages
@@ -60,7 +59,7 @@ class CoursesController < ApplicationController
   private
 
   def course_params
-    params.require(:course).permit(:title, :price_cents, sections_attributes: [:id, :title, :price_cents, :description, { videos_attributes: %i[id name video] }])
+    params.require(:course).permit(:title, :price_cents)
   end
 
   def authorize_user!

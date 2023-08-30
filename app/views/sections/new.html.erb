@@ -1,8 +1,29 @@
 <h1>Sections#new</h1>
-<%= simple_form_for @section do |f| %>
-  <%= f.input :title,
-        label: "section title :" %>
-  <%= f.input :course_id, collection: Course.all, label: "Course", label_method: :title %>
 
-  <%= f.button :submit, "Create Section" %>
-<% end %>
+<div class="container" data-controller="sections">
+  <%= simple_form_for @section, url: sections_path do |s| %>
+    <%= s.input :course_id,
+    collection: Course.all,
+    label: "Course",
+    label_method: :title,
+    selected: @course.present? ? @course.id : Course.last.id,
+    input_html: {
+      data: {
+        controller: "sections",
+        sectionsTarget: "sectionsList",
+        courseSelectTarget: "courseSelect",
+        action: "change->sections#courseSelected"
+      },
+      courses: Course.all.to_json(include: { sections: { only: :title } })
+    },
+    class: "form" %>
+
+    <div class="d-flex">
+      <%= s.input :title, class: "form" %>
+      <%= s.input :price_cents, class: "form" %>
+    </div>
+    <%= s.input :description, class: "form" %>
+
+    <%= s.button :submit, "Create Section", class: "form" %>
+  <% end %>
+</div>
