@@ -33,7 +33,6 @@ class CoursesController < ApplicationController
     if @course.save
       redirect_to new_section_path(course_title: @course.title),
                   notice: 'Bonjour'
-      puts "PRICE PRICE#{@course.price_cents}"
     else
       puts @course.errors.full_messages
       render :new, status: :unprocessable_entity
