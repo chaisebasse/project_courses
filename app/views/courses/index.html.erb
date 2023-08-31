@@ -1,6 +1,11 @@
 <h1>Courses#index</h1>
 <% @courses.each do |course| %>
-  <%= link_to course.title, course_path(course) %> <%= humanized_money_with_symbol(course.price) %> <br>
+  <div>
+    <div style='height: 300, width: 500, crop: :fill'><%= course.video.present? ? image_tag(course.video) : image_tag('photo-hadrien.jpg') %></div>
+    <div>
+      <%= link_to course.title, course_path(course) %> <%= humanized_money_with_symbol(course.price) %> <br>
+    </div>
+  </div>
 <% end %>
 
 <% if current_user != nil %>
