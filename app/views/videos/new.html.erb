@@ -5,7 +5,7 @@
         class: "form" %>
   <%= f.grouped_collection_select :section_id, Course.all, :sections, :title, :id, :title, prompt: "Select a Section", class: "form" %>
   <%= f.input :video,
-              required: false,
+              required: true,
               as: :file,
               class: "form" %>
 

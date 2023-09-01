@@ -6,9 +6,12 @@
       <h4>Enter Course Title</h4>
       <%= c.input :title, class: "form" %>
       <%= c.input :price_cents, class: "form" %>
+      <%= c.input :video,
+            required: true,
+            as: :file,
+            class: "form" %>
     </div>
 
     <div class="mt-3"><%= c.button :submit, class: "form" %></div>
   <% end %>
 </div>
-

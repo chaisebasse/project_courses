@@ -1,0 +1,22 @@
+.course-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.course {
+  width: calc(90% - 20px); /* Adjust the width as needed */
+  height: 400px;
+  margin: 10px;
+  border: 1px solid #ccc;
+  text-align: center;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.video-course {
+  width: 100%;
+  height: auto;
+  max-height: calc(100vh - 400px); /* Adjust this value based on your layout */
+  object-fit: cover;
+}
