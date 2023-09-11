@@ -10,6 +10,7 @@
             required: true,
             as: :file,
             class: "form" %>
+      <%= c.input :color, label: 'Creator Color', collection: [['User 1', 'rgb(255, 152, 72)'], ['User 2', '#5CB8E4'], ['Other', 'green']], as: :select, class: "form" %>
     </div>
 
     <div class="mt-3"><%= c.button :submit, class: "form" %></div>

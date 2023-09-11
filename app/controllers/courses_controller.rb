@@ -13,10 +13,12 @@ class CoursesController < ApplicationController
     @section = Section.find(params[:section_id]) if params[:section_id].present?
 
     # Check if a section is selected, and create or find an order for the selected section
-    @order = if @section
-               current_user.orders.find_or_create_by(purchasable: @section, state: 'pending')
-             else
-               current_user.orders.find_or_create_by(purchasable: @course, state: 'pending')
+    @order = if current_user.present?
+               if @section
+                 current_user.orders.find_or_create_by(purchasable: @section, state: 'pending')
+               else
+                 current_user.orders.find_or_create_by(purchasable: @course, state: 'pending')
+               end
              end
     authorize @course
   end
@@ -27,8 +29,16 @@ class CoursesController < ApplicationController
   end
 
   def create
+    chosen_color = params[:course][:color]
+    user_colors = {
+      'User 1' => 'rgb(255, 152, 72)',
+      'User 2' => '#5CB8E4',
+      'Other' => 'green'
+    }
+
     @course = Course.new(course_params)
     @course.price_cents = params[:course][:price_cents]
+    @course.color = user_colors[chosen_color]
     @course.save
     if @course.save
       redirect_to new_section_path(course_title: @course.title),

@@ -1,14 +1,15 @@
 <h1>Courses#index</h1>
 <div class="course-grid">
   <% @courses.each do |course| %>
-    <div class='course'>
-      <%= course.video.present? ? image_tag(course.video, class: 'video-course') : image_tag('courses-photo.jpg', class: 'video-course') %>
-      <div>
+    <div class='course' style="background-color: <%= course.color %>;">
+      <div class="course-background">
+
       </div>
+      <%= course.video.present? ? image_tag(course.video, class: 'video-course') : image_tag('courses-photo.jpg', class: 'video-course') %>
       <div>
         <%= link_to course.title, course_path(course) %> <%= humanized_money_with_symbol(course.price) %> <br>
       </div>
-    </div>
+      <i class="fa-solid fa-chevron-down fa-2xl" style="color: #000000;"></i>    </div>
   <% end %>
 </div>
 

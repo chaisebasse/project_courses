@@ -46,6 +46,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_27_193054) do
     t.string "title"
     t.text "description"
     t.string "sku"
+    t.string "color"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "price_cents", default: 0, null: false
