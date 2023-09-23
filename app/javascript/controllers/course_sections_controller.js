@@ -8,6 +8,7 @@ export default class extends Controller {
   }
 
   toggleSections() {
+    console.log("ok")
     this.sectionsListTarget.classList.toggle("hidden");
   }
 }

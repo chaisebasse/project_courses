@@ -1,19 +1,21 @@
 <h1>Courses#index</h1>
-<div class="course-grid">
+<div class="course-grid" data-controller="course-sections">
   <% @courses.each do |course| %>
     <div class='course' style="background-color: <%= course.color %>;">
+      <%= course.video.present? ? image_tag(course.video, class: 'video-course') : image_tag('courses-photo.jpg', class: 'video-course') %>
       <div>
-        <%= course.video.present? ? image_tag(course.video, class: 'video-course') : image_tag('courses-photo.jpg', class: 'video-course') %>
-        <div>
-          <%= link_to course.title, course_path(course) %> <%= humanized_money_with_symbol(course.price) %> <br>
-        </div>
-        <div data-action="click->course-sections#toggleSections"><i class="fa-solid fa-chevron-down fa-2xl" style="color: #000000;"></i></div>
+        <%= link_to course.title, course_path(course) %> <%= humanized_money_with_symbol(course.price) %> <br>
       </div>
-      <ul class="sections-list hidden" data-course-target="course-sections.sectionsList">
-        <% course.sections.each do |section| %>
-          <li><%= section.title %></li>
-        <% end %>
-      </ul>
+      <div>
+        <span data-action="click->course-sections#toggleSections">
+          <i class="fa-solid fa-chevron-down fa-2xl" style="color: #000000;"></i>
+        </span>
+        <ul class="sections-list" data-course-sections-target="sectionsList">
+          <% course.sections.each do |section| %>
+            <li><%= section.title %></li>
+          <% end %>
+        </ul>
+      </div>
     </div>
   <% end %>
 </div>
