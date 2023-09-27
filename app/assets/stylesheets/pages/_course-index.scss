@@ -1,3 +1,7 @@
+// .course {
+//   margin: 30px
+// }
+
 .course-grid {
   display: flex;
   flex-wrap: wrap;
@@ -12,6 +16,10 @@
   object-fit: cover;
   margin: auto;
   text-align: center; /* Center the content */
+}
+
+.course-description {
+  background-color: rgba(232, 232, 232, 0.837);
 }
 
 .video-course {
