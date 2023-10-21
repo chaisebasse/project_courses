@@ -1,36 +1,35 @@
 <h1>Courses#index</h1>
 <div class="course-grid" data-controller="course-sections">
   <% @courses.each do |course| %>
-  <div class="box">
-    <div class='course'>
-      <div class="" style="background-color: <%= course.color %>;">
-        <%= course.video.present? ? image_tag(course.video, class: 'video-course') : image_tag('courses-photo.jpg', class: 'video-course') %>
+    <div data-controller="modal">
+      <div class='course' data-id="<%= course.id %>" data-action="click->modal#open">
+        <div class="" style="background-color: <%= course.color %>;">
+          <%= course.video.present? ? image_tag(course.video, class: 'video-course') : image_tag('courses-photo.jpg', class: 'video-course') %>
+        </div>
+        <div class="course-description">
+          <%= link_to course.title, course_path(course) %> <%= humanized_money_with_symbol(course.price) %> <br>
+          <div>
+            <span data-action="click->course-sections#toggleSections">
+              <i class="fa-solid fa-chevron-down fa-2xl" style="color: #000000;"></i>
+            </span>
+            <ul class="sections-list hidden" data-course-sections-target="sectionsList">
+              <% course.sections.each do |section| %>
+                <li><%= section.title %></li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
       </div>
-      <div class="course-description">
-        <%= link_to course.title, course_path(course) %> <%= humanized_money_with_symbol(course.price) %> <br>
-        <div>
-          <span data-action="click->course-sections#toggleSections">
-            <i class="fa-solid fa-chevron-down fa-2xl" style="color: #000000;"></i>
-          </span>
-          <ul class="sections-list hidden" data-course-sections-target="sectionsList">
-            <% course.sections.each do |section| %>
-              <li><%= section.title %></li>
-            <% end %>
-          </ul>
+
+      <div class="modal-container hidden" id="m3-o" style="--m-background: var(--global-background);" data-modal-target="modal">
+        <div style="--m-shadow: 0 0 10rem 0" class="modal-content" data-modal-target="modalContent">
+          <h1 class="modal_title">Modal 3 Title</h1>
+          <p class="modal_text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facilis ex dicta maiores libero minus obcaecati iste optio, eius labore repellendus.</p>
+          <button class="modal_btn" data-action="click->modal#close">Close &rarr;</button>
+          <a href="#m3-c" class="link-2"></a>
         </div>
       </div>
     </div>
-
-    <div class="modal-container" id="m3-o" style="--m-background: var(--global-background);">
-      <div class="modal" style="--m-shadow: 0 0 10rem 0">
-        <h1 class="modal__title">Modal 3 Title</h1>
-        <p class="modal__text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facilis ex dicta maiores libero minus obcaecati iste optio, eius labore repellendus.</p>
-        <button class="modal__btn">Button &rarr;</button>
-        <button class="modal__btn">Button &rarr;</button>
-        <a href="#m3-c" class="link-2"></a>
-      </div>
-    </div>
-  </div>
   <% end %>
 </div>
 
