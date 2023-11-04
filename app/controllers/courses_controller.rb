@@ -31,9 +31,9 @@ class CoursesController < ApplicationController
   def create
     chosen_color = params[:course][:color]
     user_colors = {
-      'User 1' => 'rgb(255, 152, 72)',
-      'User 2' => '#5CB8E4',
-      'Other' => 'green'
+      'User 1': 'rgb(255, 152, 72)',
+      'User 2': '#5CB8E4',
+      'Other': 'green'
     }
 
     @course = Course.new(course_params)
