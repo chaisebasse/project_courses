@@ -1,0 +1,17 @@
+.button-main {
+  background-color: rgba(0, 0, 0, 0.755);
+  border-color: #1a1a1a;
+  border-radius: 10px;
+  color: rgb(214, 214, 214);
+  font-size: 15px;
+  padding: 10px;
+  margin: 2px;
+  font-family: $body-font;
+  text-decoration: none;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.325);
+    border-color: #363636;
+    color: white;
+  }
+}

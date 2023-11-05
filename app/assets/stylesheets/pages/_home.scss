@@ -1,1 +1,15 @@
 // Specific CSS for your home-page
+.intro-text {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 500px;
+  border: 3px solid rgba(0, 0, 0, 0.6);
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.intro-div {
+  display: flex;
+  justify-content: center;
+}
