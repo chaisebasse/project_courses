@@ -1,42 +1,46 @@
 <h1>Courses#index</h1>
-<div class="course-grid" data-controller="course-sections">
-  <% @courses.each do |course| %>
-    <div data-controller="modal">
-      <div class='course' data-id="<%= course.id %>" data-action="click->modal#open">
-        <div class="" style="background-color: <%= course.color %>;">
-          <%= course.video.present? ? image_tag(course.video, class: 'video-course') : image_tag('courses-photo.jpg', class: 'video-course') %>
+<div>
+  <div class="course-grid" data-controller="course-sections">
+    <% @courses.each do |course| %>
+      <div data-controller="modal">
+        <div class='course' data-id="<%= course.id %>" data-action="click->modal#open">
+          <div class="" style="background-color: <%= course.color %>;">
+            <%= course.video.present? ? image_tag(course.video, class: 'video-course') : image_tag('courses-photo.jpg', class: 'video-course') %>
+          </div>
+          <div class="course-description">
+            <%= link_to course.title, course_path(course), class:"button-main" %> <%= humanized_money_with_symbol(course.price) %> <br>
+            <div>
+              <span data-action="click->course-sections#toggleSections">
+                <i class="fa-solid fa-chevron-down fa-2xl" style="color: #000000;"></i>
+              </span>
+              <ul class="sections-list hidden" data-course-sections-target="sectionsList">
+                <% course.sections.each do |section| %>
+                  <li><%= section.title %></li>
+                <% end %>
+              </ul>
+            </div>
+          </div>
         </div>
-        <div class="course-description">
-          <%= link_to course.title, course_path(course) %> <%= humanized_money_with_symbol(course.price) %> <br>
-          <div>
-            <span data-action="click->course-sections#toggleSections">
-              <i class="fa-solid fa-chevron-down fa-2xl" style="color: #000000;"></i>
-            </span>
-            <ul class="sections-list hidden" data-course-sections-target="sectionsList">
-              <% course.sections.each do |section| %>
-                <li><%= section.title %></li>
-              <% end %>
-            </ul>
+
+        <div class="modal-overlay hidden" data-modal-target="modal">
+          <div class="modal-content" data-modal-target="modalContent">
+            <h1 class="modal_title">Modal Title</h1>
+            <p class="modal_text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facilis ex dicta maiores libero minus obcaecati iste optio, eius labore repellendus.</p>
+            <button class="button-main" data-action="click->modal#close">Close &rarr;</button>
+            <a href="#m3-c" class="link-2"></a>
           </div>
         </div>
       </div>
+    <% end %>
+  </div>
 
-      <div class="modal-overlay hidden" data-modal-target="modal">
-        <div class="modal-content" data-modal-target="modalContent">
-          <h1 class="modal_title">Modal Title</h1>
-          <p class="modal_text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facilis ex dicta maiores libero minus obcaecati iste optio, eius labore repellendus.</p>
-          <button class="modal_btn" data-action="click->modal#close">Close &rarr;</button>
-          <a href="#m3-c" class="link-2"></a>
-        </div>
-      </div>
-    </div>
-  <% end %>
+  <div class="mb-1">
+    <% if current_user != nil %>
+      <% if current_user.admin %>
+        <%= link_to "create a course", new_course_path, class:"button-main" %>
+        <%= link_to "create a section", new_section_path, class:"button-main" %>
+        <%= link_to "create a video", new_video_path, class:"button-main" %>
+      <% end %>
+    <% end %>
+  </div>
 </div>
-
-<% if current_user != nil %>
-  <% if current_user.admin %>
-    <%= link_to "create a course", new_course_path %>
-    <%= link_to "create a section", new_section_path %>
-    <%= link_to "create a video", new_video_path %>
-  <% end %>
-<% end %>

@@ -19,3 +19,7 @@
   background-color: #FFFFFF;
   margin-top: 15px;
 }
+
+::selection {
+  background-color: rgba(0, 0, 0, 0.325);
+}
